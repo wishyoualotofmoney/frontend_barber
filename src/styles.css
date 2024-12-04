@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+/* Базовый стиль для всего сайта */
+html, body {
+    font-family: 'Roboto', sans-serif; /* Устанавливаем шрифт по умолчанию */
+    color: #fff; /* Цвет текста */
+    background-color: #1c1c1c; /* Темный фон */
+    margin: 0;
+    height: 100%; /* Высота на весь экран */
+    display: flex;
+    flex-direction: column; /* Вертикальная структура */
+}
+
+/* Контейнер для приложения */
+.app-container {
+    display: flex;
+    flex-direction: column; /* Элементы располагаются вертикально */
+    min-height: 100vh; /* Контейнер занимает всю высоту окна */
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1; /* Растягивает основной контент, чтобы заполнить оставшееся пространство */
+}
+
+/* Стили для кнопок */
+button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Полужирный шрифт для акцента */
+    font-size: 16px; /* Удобный размер текста */
+    text-transform: uppercase; /* Заглавные буквы */
+    letter-spacing: 1px; /* Межбуквенный интервал */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c8a83a; /* Эффект при наведении */
+    color: #fff;
+}
+
+/* Стили для заголовков */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #f8c94d; /* Золотистый цвет заголовков */
+}
+
+/* Стили для общего текста */
+p, label, span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.5; /* Увеличиваем межстрочный интервал */
+}
+
+/* Стили для полей ввода */
+input {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 10px;
+}
+
+/* Стили для футера */
+footer {
+    background-color: rgba(0, 0, 0, 0.8); /* Темный фон */
+    color: #fff; /* Белый текст */
+    padding: 20px;
+    text-align: center;
+    width: 100%; /* Занимает всю ширину */
+    margin-top: auto; /* Прижимает футер к нижней части контейнера */
+}

@@ -1,14 +1,19 @@
 footer {
-    background-color: #000;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Темный фон */
     color: #fff;
     padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  footer nav a {
+    text-align: center;
+}
+
+footer nav a {
     color: #f8c94d;
     text-decoration: none;
     margin: 0 10px;
-  }
+    transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+    color: #fff; /* Белый при наведении */
+}

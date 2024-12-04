@@ -1,10 +1,12 @@
 <header>
-    <nav>
-      <a (click)="toggleAuthForm()">Личный кабинет</a>
-    </nav>
-  </header>
-  
-  <!-- Форма авторизации -->
+  <div class="logo-container">
+    <img src= "/src/app/assets/logo.png" alt="Логотип" class="logo">
+  </div>
+  <nav>
+    <a (click)="toggleAuthForm()">Личный кабинет</a>
+  </nav>
+</header>
+
   <div *ngIf="showAuthForm" class="auth-modal">
     <form [formGroup]="authForm" (ngSubmit)="onLogin()">
       <h3>Авторизация</h3>
