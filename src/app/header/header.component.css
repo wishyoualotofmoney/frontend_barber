@@ -3,37 +3,23 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    background-color: #1c1c1c;
+    color: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
     z-index: 1000;
   }
   
-  .auth-modal form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .auth-modal label {
-    margin-top: 10px;
-  }
-  
   .auth-modal input {
-    margin-top: 5px;
-    padding: 5px;
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    color: #fff;
   }
   
   .auth-modal button {
     margin-top: 15px;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .auth-modal button:hover {
-    background-color: #0056b3;
+    background-color: #f8c94d;
+    color: #000;
   }
