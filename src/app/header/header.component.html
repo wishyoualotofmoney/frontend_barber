@@ -1,0 +1,26 @@
+<header>
+    <nav>
+      <a (click)="toggleAuthForm()">Личный кабинет</a>
+    </nav>
+  </header>
+  
+  <!-- Форма авторизации -->
+  <div *ngIf="showAuthForm" class="auth-modal">
+    <form [formGroup]="authForm" (ngSubmit)="onLogin()">
+      <h3>Авторизация</h3>
+      <label for="username">Логин:</label>
+      <input id="username" formControlName="username" />
+      <div *ngIf="authForm.get('username')?.invalid && authForm.get('username')?.touched">
+        <small *ngIf="authForm.get('username')?.errors?.['required']">Логин обязателен</small>
+      </div>
+  
+      <label for="password">Пароль:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+        <small *ngIf="authForm.get('password')?.errors?.['required']">Пароль обязателен</small>
+      </div>
+  
+      <button type="submit" [disabled]="authForm.invalid">Войти</button>
+      <button type="button" (click)="toggleAuthForm()">Отмена</button>
+    </form>
+  </div>
