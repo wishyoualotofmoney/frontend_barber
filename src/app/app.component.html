@@ -1,12 +1,17 @@
 <div class="app-container">
-     <!-- Header Section -->
+    <!-- Header Section -->
     <app-header></app-header>
-      
+  
     <!-- Main Content Section -->
     <div class="main-content">
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
-      
-        <!-- Footer Section -->
+  
+    <!-- Auth Modal -->
+    <app-auth *ngIf="isAuthVisible"></app-auth>
+
+  
+    <!-- Footer Section -->
     <app-footer></app-footer>
-</div>
+  </div>
+  

@@ -1,0 +1,29 @@
+<div class="auth-modal" *ngIf="showAuthForm">
+    <div class="modal-overlay" (click)="onClose()"></div>
+    <div class="modal-content">
+      <h3>Авторизация</h3>
+      <form [formGroup]="authForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="username">Логин:</label>
+          <input id="username" formControlName="username" placeholder="Введите логин" />
+          <div class="error" *ngIf="authForm.get('username')?.invalid && authForm.get('username')?.touched">
+            <small *ngIf="authForm.get('username')?.errors?.['required']">Логин обязателен</small>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Пароль:</label>
+          <input id="password" type="password" formControlName="password" placeholder="Введите пароль" />
+          <div class="error" *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+            <small *ngIf="authForm.get('password')?.errors?.['required']">Пароль обязателен</small>
+          </div>
+        </div>
+  
+        <div class="form-buttons">
+          <button type="submit" [disabled]="authForm.invalid" class="btn btn-primary">Войти</button>
+          <button type="button" (click)="onClose()" class="btn btn-secondary">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
