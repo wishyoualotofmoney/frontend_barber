@@ -1,13 +1,84 @@
+/* dashboard.component.css */
+
+/* Общий стиль фона */
 .dashboard {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .dashboard h1 {
-    color: #007bff;
-  }
-  
-  .dashboard p {
-    font-size: 1.2rem;
-  }
-  
+  background-color: #222; /* тёмно-серый/чёрный фон */
+  min-height: 100vh;      /* Заполнение экрана по высоте */
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Стиль для заголовка */
+.dashboard h1 {
+  color: #fff; /* белый цвет текста */
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Общий цвет текста */
+.dashboard p,
+.dashboard label {
+  color: #ccc; /* светло-серый текст для контраста */
+}
+
+/* Инпуты */
+.dashboard input[type="text"] {
+  background-color: #333;  
+  border: 1px solid #444;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.dashboard input[type="text"]::placeholder {
+  color: #888;
+}
+
+/* Кнопки */
+.dashboard button {
+  background-color: #5A9;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.dashboard button:hover {
+  background-color: #48a;
+}
+
+/* Сообщения об ошибках и успехах */
+.dashboard .error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.dashboard .success-message {
+  color: #0f0;
+  margin-bottom: 10px;
+}
+
+/* Контейнер для формы */
+.dashboard .form-container {
+  margin-top: 20px;
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Заголовок формы */
+.dashboard .form-container h2 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+/* Интервалы между полями формы */
+.dashboard .form-container div {
+  margin-bottom: 15px;
+}

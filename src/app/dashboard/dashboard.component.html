@@ -1,5 +1,31 @@
 <div class="dashboard">
-    <h1>Добро пожаловать в Личный кабинет!</h1>
-    <p>Здесь будет отображаться информация о пользователе.</p>
-  </div>
+  <h1>Добро пожаловать в личный кабинет!</h1>
+  <p>Здесь будет отображаться информация о пользователе.</p>
   
+  <button (click)="onScheduleClick()" [disabled]="isLoading">Записаться к барберу</button>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <!-- Отображаем форму, если showForm === true -->
+  <div *ngIf="showForm" class="form-container">
+    <h2>Форма записи</h2>
+
+    <div>
+      <label>Дата и время записи (ISO 8601, напр. 2024-12-20T10:00:00Z)</label><br/>
+      <input type="text" [(ngModel)]="appointmentTime" placeholder="2024-12-20T10:00:00Z" />
+    </div>
+
+    <div>
+      <label>Имя барбера</label><br/>
+      <input type="text" [(ngModel)]="barberName" placeholder="Иван Иванов" />
+    </div>
+
+    <div>
+      <label>Название услуги</label><br/>
+      <input type="text" [(ngModel)]="serviceName" placeholder="Стрижка мужская" />
+    </div>
+
+    <button (click)="onCreateAppointment()" [disabled]="isLoading">Создать запись</button>
+  </div>
+</div>
