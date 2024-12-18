@@ -7,30 +7,31 @@
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
   
-    <div *ngIf="token" style="margin-top: 20px;">
-      <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех действующих барберов</button>
+    <div *ngIf="token" class="barbers-section">
+      <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех наших барберов</button>
     </div>
   
-    <!-- Таблица с барберами, если они загружены -->
-    <div *ngIf="barbers.length > 0" style="margin-top: 20px;">
+    <div *ngIf="barbers.length > 0" class="barbers-section">
       <h2>Список барберов:</h2>
-      <table style="width: 100%; border-collapse: collapse;">
+      <table class="barbers-table">
         <thead>
           <tr>
-            <th (click)="onSort('name')" style="cursor: pointer; border-bottom:1px solid #ccc; padding:5px;">
-              Имя <span *ngIf="sortColumn === 'name'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+            <th (click)="onSort('name')">
+              Имя
+              <span *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
             </th>
-            <th (click)="onSort('experienceLevel')" style="cursor: pointer; border-bottom:1px solid #ccc; padding:5px;">
-              Опыт <span *ngIf="sortColumn === 'experienceLevel'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+            <th (click)="onSort('experienceLevel')">
+              Опыт
+              <span *ngIf="sortColumn === 'experienceLevel'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
             </th>
-            <th style="border-bottom:1px solid #ccc; padding:5px;">Действия</th>
+            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let barber of barbers">
-            <td style="border-bottom:1px solid #444; padding:5px;">{{ barber.name }}</td>
-            <td style="border-bottom:1px solid #444; padding:5px;">{{ barber.experienceLevel }}</td>
-            <td style="border-bottom:1px solid #444; padding:5px;">
+            <td>{{ barber.name }}</td>
+            <td>{{ barber.experienceLevel }}</td>
+            <td>
               <button (click)="onDeleteBarberClick(barber.id)">Удалить</button>
             </td>
           </tr>
@@ -38,8 +39,7 @@
       </table>
     </div>
   
-    <!-- Форма для добавления нового барбера -->
-    <div *ngIf="token" style="margin-top: 20px;">
+    <div *ngIf="token" class="add-barber-form">
       <h2>Добавить нового барбера</h2>
       <div>
         <label>Имя барбера:</label><br/>

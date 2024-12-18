@@ -1,39 +1,25 @@
-/* dashboard.component.css */
-
-/* Общий стиль фона */
+/* Общий фон и контейнер */
 .dashboard {
-  background-color: #222; /* тёмно-серый/чёрный фон */
-  min-height: 100vh;      /* Заполнение экрана по высоте */
-  padding: 20px;
+  background-color: #222;        /* Тёмный фон */
+  min-height: 100vh;             /* Заполнение экрана по высоте */
+  padding: 20px;                 /* Отступы от краёв экрана */
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  max-width: 800px;              /* Максимальная ширина контента */
+  margin: 0 auto;                /* Центрируем содержимое по горизонтали */
 }
 
-/* Стиль для заголовка */
+/* Заголовок */
 .dashboard h1 {
-  color: #fff; /* белый цвет текста */
+  color: #fff;
   font-size: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 20px;          /* Отступ после заголовка */
 }
 
-/* Общий цвет текста */
+/* Общий текст */
 .dashboard p,
 .dashboard label {
-  color: #ccc; /* светло-серый текст для контраста */
-}
-
-/* Инпуты (если потребуются для других форм) */
-.dashboard input[type="text"] {
-  background-color: #333;
-  border: 1px solid #444;
-  color: #fff;
-  padding: 5px 10px;
-  margin: 5px 0;
-  border-radius: 4px;
-}
-
-.dashboard input[type="text"]::placeholder {
-  color: #888;
+  color: #ccc;
 }
 
 /* Кнопки */
@@ -56,10 +42,73 @@
 /* Сообщения об ошибках и успехах */
 .dashboard .error-message {
   color: red;
-  margin-bottom: 10px;
+  margin: 10px 0;              /* Отступы сверху и снизу для отделения */
 }
 
 .dashboard .success-message {
   color: #0f0;
+  margin: 10px 0;
+}
+
+/* Блок со списком барберов */
+.barbers-section {
+  margin-top: 20px;
+}
+
+.barbers-section h2 {
+  color: #fff;
   margin-bottom: 10px;
+}
+
+/* Таблица барберов */
+.barbers-table {
+  width: 100%;
+  border-collapse: collapse;    /* Объединяем границы */
+  margin-top: 10px;
+}
+
+.barbers-table th,
+.barbers-table td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: left;
+  color: #ccc;
+}
+
+.barbers-table th {
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.barbers-table th span {
+  margin-left: 5px;             /* Отступ для стрелки сортировки */
+}
+
+/* Форма добавления барбера */
+.add-barber-form {
+  margin-top: 20px;
+}
+
+.add-barber-form h2 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.add-barber-form div {
+  margin-bottom: 15px;          /* Отступы между полями ввода */
+}
+
+.add-barber-form input[type="text"],
+.add-barber-form input[type="number"] {
+  background-color: #333;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-barber-form input::placeholder {
+  color: #888;
 }
