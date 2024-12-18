@@ -22,9 +22,9 @@
   color: #ccc; /* светло-серый текст для контраста */
 }
 
-/* Инпуты */
+/* Инпуты (если потребуются для других форм) */
 .dashboard input[type="text"] {
-  background-color: #333;  
+  background-color: #333;
   border: 1px solid #444;
   color: #fff;
   padding: 5px 10px;
@@ -62,23 +62,4 @@
 .dashboard .success-message {
   color: #0f0;
   margin-bottom: 10px;
-}
-
-/* Контейнер для формы */
-.dashboard .form-container {
-  margin-top: 20px;
-  background-color: #2a2a2a;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-/* Заголовок формы */
-.dashboard .form-container h2 {
-  color: #fff;
-  margin-bottom: 15px;
-}
-
-/* Интервалы между полями формы */
-.dashboard .form-container div {
-  margin-bottom: 15px;
 }
