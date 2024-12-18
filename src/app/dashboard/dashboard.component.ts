@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { BarberService } from '../services/barber.service'; // Импортируем наш сервис для барберов
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -15,14 +16,14 @@ export class DashboardComponent {
   errorMessage = '';
   successMessage = '';
   token: string | null = null;
+  barbers: any[] = []; // Массив для хранения списка барберов
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private barberService: BarberService) {}
 
   onLoginClick() {
     this.isLoading = true;
     this.errorMessage = '';
     this.successMessage = '';
-    console.log('Кнопка нажата, логин...');
 
     this.authService.login('admin', 'admin').subscribe({
       next: (res) => {
@@ -33,6 +34,30 @@ export class DashboardComponent {
       error: (err) => {
         this.isLoading = false;
         this.errorMessage = 'Ошибка при авторизации';
+        console.error(err);
+      }
+    });
+  }
+
+  onGetBarbersClick() {
+    if (!this.token) {
+      this.errorMessage = 'Сначала авторизуйтесь, чтобы получить токен.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.barberService.getAllBarbers(this.token).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        this.barbers = data;
+        this.successMessage = 'Список барберов получен!';
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Ошибка при получении списка барберов';
         console.error(err);
       }
     });
