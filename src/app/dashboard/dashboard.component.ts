@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { BarberService } from '../services/barber.service'; // Импортируем наш сервис для барберов
+import { BarberService } from '../services/barber.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,7 +16,10 @@ export class DashboardComponent {
   errorMessage = '';
   successMessage = '';
   token: string | null = null;
-  barbers: any[] = []; // Массив для хранения списка барберов
+
+  barbers: any[] = [];
+  sortColumn: string = 'name'; // по умолчанию сортируем по имени
+  sortDirection: 'asc' | 'desc' = 'asc'; // направление сортировки
 
   constructor(private authService: AuthService, private barberService: BarberService) {}
 
@@ -26,7 +29,7 @@ export class DashboardComponent {
     this.successMessage = '';
 
     this.authService.login('admin', 'admin').subscribe({
-      next: (res) => {
+      next: () => {
         this.isLoading = false;
         this.successMessage = 'Авторизация успешна!';
         this.token = this.authService.getToken();
@@ -54,6 +57,7 @@ export class DashboardComponent {
         this.isLoading = false;
         this.barbers = data;
         this.successMessage = 'Список барберов получен!';
+        this.sortBarbers(); // Применим сортировку после получения данных
       },
       error: (err) => {
         this.isLoading = false;
@@ -61,5 +65,29 @@ export class DashboardComponent {
         console.error(err);
       }
     });
+  }
+
+  sortBarbers() {
+    this.barbers.sort((a, b) => {
+      const valA = a[this.sortColumn];
+      const valB = b[this.sortColumn];
+
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+
+  onSort(column: string) {
+    if (this.sortColumn === column) {
+      // Если кликаем по тому же столбцу, меняем направление сортировки
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Если кликаем по другому столбцу, сортируем по нему в восходящем порядке
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    this.sortBarbers();
   }
 }

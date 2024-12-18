@@ -1,26 +1,40 @@
 <div class="dashboard">
-  <h1>Добро пожаловать в личный кабинет!</h1>
-  <p>Здесь будет отображаться информация о пользователе.</p>
+  <h1>Добро пожаловать в личный кабинет администратора!</h1>
+  <p>Для изменений нажмите кнопку "Авторизоваться".</p>
 
-  <!-- Кнопка для авторизации -->
   <button (click)="onLoginClick()" [disabled]="isLoading">Авторизоваться</button>
 
-  <!-- Сообщения об ошибках и успехах -->
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
-  <!-- Если токен есть, показываем кнопку получить барберов -->
   <div *ngIf="token" style="margin-top: 20px;">
     <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех наших барберов</button>
   </div>
 
-  <!-- Отображаем список барберов, если они есть -->
+  <!-- Отображаем таблицу, если барберы загружены -->
   <div *ngIf="barbers.length > 0" style="margin-top: 20px;">
     <h2>Список барберов:</h2>
-    <ul>
-      <li *ngFor="let barber of barbers">
-        {{ barber.name }} (Опыт: {{ barber.experienceLevel }})
-      </li>
-    </ul>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <!-- При клике на заголовок вызываем onSort -->
+          <th (click)="onSort('name')" style="cursor: pointer; border-bottom:1px solid #ccc; padding:5px;">
+            Имя 
+            <!-- Показываем направление сортировки, если сортируем по этому столбцу -->
+            <span *ngIf="sortColumn === 'name'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+          </th>
+          <th (click)="onSort('experienceLevel')" style="cursor: pointer; border-bottom:1px solid #ccc; padding:5px;">
+            Опыт 
+            <span *ngIf="sortColumn === 'experienceLevel'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let barber of barbers">
+          <td style="border-bottom:1px solid #444; padding:5px;">{{ barber.name }}</td>
+          <td style="border-bottom:1px solid #444; padding:5px;">{{ barber.experienceLevel }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
