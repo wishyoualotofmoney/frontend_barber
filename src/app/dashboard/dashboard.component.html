@@ -38,17 +38,47 @@
       </table>
     </div>
   
+    <!-- Форма добавления барбера с валидацией -->
     <div *ngIf="token" class="add-barber-form">
       <h2>Добавить нового барбера</h2>
       <div>
         <label>Имя барбера:</label><br/>
-        <input type="text" [(ngModel)]="newBarberName" placeholder="Введите имя"/>
+        <input type="text"
+               [(ngModel)]="newBarberName"
+               name="newBarberName"
+               #newBarberName="ngModel"
+               placeholder="Введите имя"
+               required
+               pattern="^[A-Za-zА-Яа-яЁё\s]+$"/>
+        <!-- Ошибки для имени барбера -->
+        <div class="error-message" *ngIf="newBarberName.invalid && newBarberName.touched">
+          <div *ngIf="newBarberName.errors?.['required']">Имя барбера обязательно</div>
+          <div *ngIf="newBarberName.errors?.['pattern']">Имя может содержать только буквы и пробелы</div>
+        </div>
       </div>
+  
       <div>
         <label>Опыт (число):</label><br/>
-        <input type="number" [(ngModel)]="newBarberExperience" placeholder="Введите опыт"/>
+        <input type="number"
+               [(ngModel)]="newBarberExperience"
+               name="newBarberExperience"
+               #newBarberExperience="ngModel"
+               placeholder="Введите опыт"
+               required
+               min="0"
+               max="10"/>
+        <!-- Ошибки для опыта барбера -->
+        <div class="error-message" *ngIf="newBarberExperience.invalid && newBarberExperience.touched">
+          <div *ngIf="newBarberExperience.errors?.['required']">Опыт обязателен</div>
+          <div *ngIf="newBarberExperience.errors?.['min']">Опыт не может быть меньше 0</div>
+          <div *ngIf="newBarberExperience.errors?.['max']">Опыт не может быть больше 10</div>
+        </div>
       </div>
-      <button (click)="onAddBarberClick()" [disabled]="isLoading">Добавить барбера</button>
+  
+      <button (click)="onAddBarberClick()" 
+              [disabled]="isLoading || newBarberName.invalid || newBarberExperience.invalid">
+        Добавить барбера
+      </button>
     </div>
   
     <!-- Клиенты -->
@@ -80,16 +110,44 @@
       </table>
     </div>
   
+    <!-- Форма добавления клиента с валидацией -->
     <div *ngIf="token" class="add-barber-form">
       <h2>Добавить нового клиента</h2>
       <div>
         <label>Имя клиента:</label><br/>
-        <input type="text" [(ngModel)]="newCustomerName" placeholder="Введите имя клиента"/>
+        <input type="text"
+               [(ngModel)]="newCustomerName"
+               name="newCustomerName"
+               #newCustomerName="ngModel"
+               placeholder="Введите имя клиента"
+               required
+               pattern="^[A-Za-zА-Яа-яЁё\s]+$"/>
+        <!-- Ошибки для имени клиента -->
+        <div class="error-message" *ngIf="newCustomerName.invalid && newCustomerName.touched">
+          <div *ngIf="newCustomerName.errors?.['required']">Имя клиента обязательно</div>
+          <div *ngIf="newCustomerName.errors?.['pattern']">Имя может содержать только буквы и пробелы</div>
+        </div>
       </div>
+  
       <div>
         <label>Предпочитаемый стиль:</label><br/>
-        <input type="text" [(ngModel)]="newCustomerStyle" placeholder="Введите стиль"/>
+        <input type="text"
+               [(ngModel)]="newCustomerStyle"
+               name="newCustomerStyle"
+               #newCustomerStyle="ngModel"
+               placeholder="Введите стиль"
+               required
+               pattern="^[A-Za-zА-Яа-яЁё\s]+$"/>
+        <!-- Ошибки для предпочитаемого стиля клиента -->
+        <div class="error-message" *ngIf="newCustomerStyle.invalid && newCustomerStyle.touched">
+          <div *ngIf="newCustomerStyle.errors?.['required']">Стиль обязателен</div>
+          <div *ngIf="newCustomerStyle.errors?.['pattern']">Стиль может содержать только буквы и пробелы</div>
+        </div>
       </div>
-      <button (click)="onAddCustomerClick()" [disabled]="isLoading">Добавить клиента</button>
+  
+      <button (click)="onAddCustomerClick()" 
+              [disabled]="isLoading || newCustomerName.invalid || newCustomerStyle.invalid">
+        Добавить клиента
+      </button>
     </div>
   </div>
