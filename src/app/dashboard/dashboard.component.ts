@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { BarberService } from '../services/barber.service';
+import { CustomerService } from '../services/customer.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,21 +13,33 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule]
 })
 export class DashboardComponent {
+  // Общие поля
   isLoading = false;
   errorMessage = '';
   successMessage = '';
   token: string | null = null;
 
+  // Барберы
   barbers: any[] = [];
-  sortColumn: string = 'name';
-  sortDirection: 'asc' | 'desc' = 'asc';
-
-  // Поля для нового барбера
+  sortColumnBarbers: string = 'name';
+  sortDirectionBarbers: 'asc' | 'desc' = 'asc';
   newBarberName: string = '';
   newBarberExperience: number | null = null;
 
-  constructor(private authService: AuthService, private barberService: BarberService) {}
+  // Клиенты
+  customers: any[] = [];
+  sortColumnCustomers: string = 'name';
+  sortDirectionCustomers: 'asc' | 'desc' = 'asc';
+  newCustomerName: string = '';
+  newCustomerStyle: string = '';
 
+  constructor(
+    private authService: AuthService,
+    private barberService: BarberService,
+    private customerService: CustomerService
+  ) {}
+
+  // Авторизация
   onLoginClick() {
     this.isLoading = true;
     this.errorMessage = '';
@@ -46,6 +59,7 @@ export class DashboardComponent {
     });
   }
 
+  // ----- Методы для барберов (предполагается, что они уже есть) -----
   onGetBarbersClick() {
     if (!this.token) {
       this.errorMessage = 'Сначала авторизуйтесь, чтобы получить токен.';
@@ -73,21 +87,21 @@ export class DashboardComponent {
 
   sortBarbers() {
     this.barbers.sort((a, b) => {
-      const valA = a[this.sortColumn];
-      const valB = b[this.sortColumn];
+      const valA = a[this.sortColumnBarbers];
+      const valB = b[this.sortColumnBarbers];
 
-      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
-      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      if (valA < valB) return this.sortDirectionBarbers === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirectionBarbers === 'asc' ? 1 : -1;
       return 0;
     });
   }
 
-  onSort(column: string) {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  onSortBarbers(column: string) {
+    if (this.sortColumnBarbers === column) {
+      this.sortDirectionBarbers = this.sortDirectionBarbers === 'asc' ? 'desc' : 'asc';
     } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
+      this.sortColumnBarbers = column;
+      this.sortDirectionBarbers = 'asc';
     }
     this.sortBarbers();
   }
@@ -99,7 +113,7 @@ export class DashboardComponent {
     }
 
     if (!this.newBarberName || this.newBarberExperience === null) {
-      this.errorMessage = 'Заполните имя и опыт барбера перед добавлением.';
+      this.errorMessage = 'Заполните имя и опыт барбера.';
       return;
     }
 
@@ -116,10 +130,9 @@ export class DashboardComponent {
       next: (addedBarber) => {
         this.isLoading = false;
         this.successMessage = 'Барбер успешно добавлен!';
-        // Добавим нового барбера в список и отсортируем
         this.barbers.push(addedBarber);
         this.sortBarbers();
-        // Очистим поля формы
+        // Сбросим поля формы
         this.newBarberName = '';
         this.newBarberExperience = null;
       },
@@ -145,12 +158,121 @@ export class DashboardComponent {
       next: () => {
         this.isLoading = false;
         this.successMessage = 'Барбер успешно удалён!';
-        // Удалим барбера из списка
         this.barbers = this.barbers.filter(b => b.id !== barberId);
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMessage = 'Ошибка при удалении барбера';
+        console.error(err);
+      }
+    });
+  }
+
+  // ----- Методы для клиентов -----
+
+  onGetCustomersClick() {
+    if (!this.token) {
+      this.errorMessage = 'Сначала авторизуйтесь, чтобы получить токен.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.customerService.getAllCustomers(this.token).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        this.customers = data;
+        this.successMessage = 'Список клиентов получен!';
+        this.sortCustomers();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Ошибка при получении списка клиентов';
+        console.error(err);
+      }
+    });
+  }
+
+  sortCustomers() {
+    this.customers.sort((a, b) => {
+      const valA = a[this.sortColumnCustomers];
+      const valB = b[this.sortColumnCustomers];
+
+      if (valA < valB) return this.sortDirectionCustomers === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirectionCustomers === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+
+  onSortCustomers(column: string) {
+    if (this.sortColumnCustomers === column) {
+      this.sortDirectionCustomers = this.sortDirectionCustomers === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumnCustomers = column;
+      this.sortDirectionCustomers = 'asc';
+    }
+    this.sortCustomers();
+  }
+
+  onAddCustomerClick() {
+    if (!this.token) {
+      this.errorMessage = 'Сначала авторизуйтесь, чтобы добавить клиента.';
+      return;
+    }
+
+    if (!this.newCustomerName || !this.newCustomerStyle) {
+      this.errorMessage = 'Заполните имя и предпочитаемый стиль клиента.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    const customerData = {
+      name: this.newCustomerName,
+      preferredStyle: this.newCustomerStyle
+    };
+
+    this.customerService.addCustomer(this.token, customerData).subscribe({
+      next: (addedCustomer) => {
+        this.isLoading = false;
+        this.successMessage = 'Клиент успешно добавлен!';
+        this.customers.push(addedCustomer);
+        this.sortCustomers();
+        // Сбросим поля формы
+        this.newCustomerName = '';
+        this.newCustomerStyle = '';
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Ошибка при добавлении клиента';
+        console.error(err);
+      }
+    });
+  }
+
+  onDeleteCustomerClick(customerId: number) {
+    if (!this.token) {
+      this.errorMessage = 'Сначала авторизуйтесь, чтобы удалять клиентов.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.customerService.deleteCustomer(this.token, customerId).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.successMessage = 'Клиент успешно удалён!';
+        this.customers = this.customers.filter(c => c.id !== customerId);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Ошибка при удалении клиента';
         console.error(err);
       }
     });

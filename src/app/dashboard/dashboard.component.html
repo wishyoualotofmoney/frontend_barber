@@ -2,11 +2,14 @@
     <h1>Добро пожаловать в личный кабинет!</h1>
     <p>Здесь будет отображаться информация о пользователе.</p>
   
+    <!-- Кнопка для авторизации -->
     <button (click)="onLoginClick()" [disabled]="isLoading">Авторизоваться</button>
   
+    <!-- Сообщения -->
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
   
+    <!-- Барберы -->
     <div *ngIf="token" class="barbers-section">
       <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех наших барберов</button>
     </div>
@@ -16,13 +19,11 @@
       <table class="barbers-table">
         <thead>
           <tr>
-            <th (click)="onSort('name')">
-              Имя
-              <span *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+            <th (click)="onSortBarbers('name')">
+              Имя <span *ngIf="sortColumnBarbers === 'name'">{{ sortDirectionBarbers === 'asc' ? '↑' : '↓' }}</span>
             </th>
-            <th (click)="onSort('experienceLevel')">
-              Опыт
-              <span *ngIf="sortColumn === 'experienceLevel'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+            <th (click)="onSortBarbers('experienceLevel')">
+              Опыт <span *ngIf="sortColumnBarbers === 'experienceLevel'">{{ sortDirectionBarbers === 'asc' ? '↑' : '↓' }}</span>
             </th>
             <th>Действия</th>
           </tr>
@@ -31,9 +32,7 @@
           <tr *ngFor="let barber of barbers">
             <td>{{ barber.name }}</td>
             <td>{{ barber.experienceLevel }}</td>
-            <td>
-              <button (click)="onDeleteBarberClick(barber.id)">Удалить</button>
-            </td>
+            <td><button (click)="onDeleteBarberClick(barber.id)">Удалить</button></td>
           </tr>
         </tbody>
       </table>
@@ -50,5 +49,47 @@
         <input type="number" [(ngModel)]="newBarberExperience" placeholder="Введите опыт"/>
       </div>
       <button (click)="onAddBarberClick()" [disabled]="isLoading">Добавить барбера</button>
+    </div>
+  
+    <!-- Клиенты -->
+    <div *ngIf="token" class="barbers-section" style="margin-top: 40px;">
+      <button (click)="onGetCustomersClick()" [disabled]="isLoading">Посмотреть всех клиентов</button>
+    </div>
+  
+    <div *ngIf="customers.length > 0" class="barbers-section">
+      <h2>Список клиентов:</h2>
+      <table class="barbers-table">
+        <thead>
+          <tr>
+            <th (click)="onSortCustomers('name')">
+              Имя <span *ngIf="sortColumnCustomers === 'name'">{{ sortDirectionCustomers === 'asc' ? '↑' : '↓' }}</span>
+            </th>
+            <th (click)="onSortCustomers('preferredStyle')">
+              Предпочитаемый стиль <span *ngIf="sortColumnCustomers === 'preferredStyle'">{{ sortDirectionCustomers === 'asc' ? '↑' : '↓' }}</span>
+            </th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers">
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.preferredStyle }}</td>
+            <td><button (click)="onDeleteCustomerClick(customer.id)">Удалить</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="token" class="add-barber-form">
+      <h2>Добавить нового клиента</h2>
+      <div>
+        <label>Имя клиента:</label><br/>
+        <input type="text" [(ngModel)]="newCustomerName" placeholder="Введите имя клиента"/>
+      </div>
+      <div>
+        <label>Предпочитаемый стиль:</label><br/>
+        <input type="text" [(ngModel)]="newCustomerStyle" placeholder="Введите стиль"/>
+      </div>
+      <button (click)="onAddCustomerClick()" [disabled]="isLoading">Добавить клиента</button>
     </div>
   </div>
