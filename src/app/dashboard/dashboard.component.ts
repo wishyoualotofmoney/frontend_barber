@@ -19,6 +19,9 @@ export class DashboardComponent {
   successMessage = '';
   token: string | null = null;
 
+barberSearchTerm: string = '';
+customerSearchTerm: string = '';
+
   // Барберы
   barbers: any[] = [];
   sortColumnBarbers: string = 'name';
@@ -215,6 +218,47 @@ export class DashboardComponent {
     }
     this.sortCustomers();
   }
+
+
+
+  // Добавим геттеры для фильтрации
+  get filteredBarbers() {
+    let result = this.barbers;
+    // Фильтрация по поиску
+    if (this.barberSearchTerm.trim()) {
+      const search = this.barberSearchTerm.trim().toLowerCase();
+      result = result.filter(barber => barber.name.toLowerCase().includes(search));
+    }
+    // Применяем сортировку к отфильтрованному массиву
+    result = this.sortArray(result, this.sortColumnBarbers, this.sortDirectionBarbers);
+    return result;
+  }
+
+  get filteredCustomers() {
+    let result = this.customers;
+    // Фильтрация по поиску
+    if (this.customerSearchTerm.trim()) {
+      const search = this.customerSearchTerm.trim().toLowerCase();
+      result = result.filter(customer => customer.name.toLowerCase().includes(search));
+    }
+    // Применяем сортировку к отфильтрованному массиву
+    result = this.sortArray(result, this.sortColumnCustomers, this.sortDirectionCustomers);
+    return result;
+  }
+
+  // Перенесём логику сортировки в утилитный метод, чтобы применять её и к отфильтрованному массиву
+  private sortArray(array: any[], sortColumn: string, sortDirection: 'asc' | 'desc'): any[] {
+    return array.slice().sort((a, b) => {
+      const valA = a[sortColumn];
+      const valB = b[sortColumn];
+
+      if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+
+
 
   onAddCustomerClick() {
     if (!this.token) {

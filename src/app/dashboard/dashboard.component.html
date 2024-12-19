@@ -16,6 +16,12 @@
   
     <div *ngIf="barbers.length > 0" class="barbers-section">
       <h2>Список барберов:</h2>
+      <!-- Поле поиска по барберам -->
+      <div>
+        <label>Поиск по имени барбера:</label><br/>
+        <input type="text" [(ngModel)]="barberSearchTerm" placeholder="Введите имя"/>
+      </div>
+  
       <table class="barbers-table">
         <thead>
           <tr>
@@ -29,7 +35,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let barber of barbers">
+          <!-- Используем filteredBarbers вместо barbers -->
+          <tr *ngFor="let barber of filteredBarbers">
             <td>{{ barber.name }}</td>
             <td>{{ barber.experienceLevel }}</td>
             <td><button (click)="onDeleteBarberClick(barber.id)">Удалить</button></td>
@@ -88,6 +95,12 @@
   
     <div *ngIf="customers.length > 0" class="barbers-section">
       <h2>Список клиентов:</h2>
+      <!-- Поле поиска по клиентам -->
+      <div>
+        <label>Поиск по имени клиента:</label><br/>
+        <input type="text" [(ngModel)]="customerSearchTerm" placeholder="Введите имя клиента"/>
+      </div>
+  
       <table class="barbers-table">
         <thead>
           <tr>
@@ -101,7 +114,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let customer of customers">
+          <!-- Используем filteredCustomers вместо customers -->
+          <tr *ngFor="let customer of filteredCustomers">
             <td>{{ customer.name }}</td>
             <td>{{ customer.preferredStyle }}</td>
             <td><button (click)="onDeleteCustomerClick(customer.id)">Удалить</button></td>
