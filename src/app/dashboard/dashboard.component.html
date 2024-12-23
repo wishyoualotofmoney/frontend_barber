@@ -1,6 +1,6 @@
 <div class="dashboard">
-    <h1>Добро пожаловать в личный кабинет!</h1>
-    <p>Здесь будет отображаться информация о пользователе.</p>
+    <h1>Добро пожаловать в личный кабинет администратора!</h1>
+    
   
     <!-- Кнопка для авторизации -->
     <button (click)="onLoginClick()" [disabled]="isLoading">Авторизоваться</button>
@@ -11,7 +11,7 @@
   
     <!-- Барберы -->
     <div *ngIf="token" class="barbers-section">
-      <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех наших барберов</button>
+      <button (click)="onGetBarbersClick()" [disabled]="isLoading">Посмотреть всех барберов</button>
     </div>
   
     <div *ngIf="barbers.length > 0" class="barbers-section">

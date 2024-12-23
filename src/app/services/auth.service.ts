@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7063/api/Auth'; // ваш базовый URL для авторизации
+  private apiUrl = 'https://localhost:7063/api/Auth'; 
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
